@@ -20,8 +20,11 @@ class MinIOClient:
     def __init__(self):
         """Initialize MinIO client with environment variables"""
         self.endpoint = os.getenv('MINIO_ENDPOINT', 'http://localhost:9000')
-        self.access_key = os.getenv('MINIO_ROOT_USER', 'minioadmin')
-        self.secret_key = os.getenv('MINIO_ROOT_PASSWORD', 'minioadmin')
+        self.access_key = os.getenv('MINIO_ROOT_USER')
+        self.secret_key = os.getenv('MINIO_ROOT_PASSWORD')
+
+        if not self.access_key or not self.secret_key:
+            raise ValueError("MinIO credentials not found. Please set MINIO_ROOT_USER and MINIO_ROOT_PASSWORD in .env file.")
         
         self.client = boto3.client(
             's3',

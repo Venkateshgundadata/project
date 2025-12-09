@@ -10,11 +10,17 @@ load_dotenv()
 def verify_gold_tables():
     """Check row counts in gold tables"""
     try:
+        user = os.getenv('LOCAL_POSTGRES_USER')
+        password = os.getenv('LOCAL_POSTGRES_PASSWORD')
+
+        if not user or not password:
+            raise ValueError("Database credentials not found. Please set LOCAL_POSTGRES_USER and LOCAL_POSTGRES_PASSWORD in .env file.")
+
         conn = psycopg2.connect(
             host=os.getenv('LOCAL_POSTGRES_HOST', 'localhost'),
             port=os.getenv('LOCAL_POSTGRES_PORT', '5432'),
-            user=os.getenv('LOCAL_POSTGRES_USER', 'postgres'),
-            password=os.getenv('LOCAL_POSTGRES_PASSWORD', 'postgres'),
+            user=user,
+            password=password,
             database='ecommerce_gold'
         )
         cursor = conn.cursor()

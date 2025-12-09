@@ -23,8 +23,11 @@ class DatabaseConnector:
         host = os.getenv('LOCAL_POSTGRES_HOST', 'localhost')
         port = os.getenv('LOCAL_POSTGRES_PORT', '5432')
         database = os.getenv('LOCAL_DB_SOURCE', 'ecommerce_source')
-        user = os.getenv('LOCAL_POSTGRES_USER', 'postgres')
-        password = os.getenv('LOCAL_POSTGRES_PASSWORD', 'postgres')
+        user = os.getenv('LOCAL_POSTGRES_USER')
+        password = os.getenv('LOCAL_POSTGRES_PASSWORD')
+
+        if not user or not password:
+            raise ValueError("Database credentials not found. Please set LOCAL_POSTGRES_USER and LOCAL_POSTGRES_PASSWORD in .env file.")
         
         connection_string = f"postgresql://{user}:{password}@{host}:{port}/{database}"
         return create_engine(connection_string, poolclass=NullPool)
@@ -34,8 +37,11 @@ class DatabaseConnector:
         host = os.getenv('LOCAL_POSTGRES_HOST', 'localhost')
         port = os.getenv('LOCAL_POSTGRES_PORT', '5432')
         database = os.getenv('LOCAL_DB_GOLD', 'ecommerce_gold')
-        user = os.getenv('LOCAL_POSTGRES_USER', 'postgres')
-        password = os.getenv('LOCAL_POSTGRES_PASSWORD', 'postgres')
+        user = os.getenv('LOCAL_POSTGRES_USER')
+        password = os.getenv('LOCAL_POSTGRES_PASSWORD')
+
+        if not user or not password:
+            raise ValueError("Database credentials not found. Please set LOCAL_POSTGRES_USER and LOCAL_POSTGRES_PASSWORD in .env file.")
         
         connection_string = f"postgresql://{user}:{password}@{host}:{port}/{database}"
         return create_engine(connection_string, poolclass=NullPool)
@@ -44,8 +50,11 @@ class DatabaseConnector:
         """Get connection string for specified database type"""
         host = os.getenv('LOCAL_POSTGRES_HOST', 'localhost')
         port = os.getenv('LOCAL_POSTGRES_PORT', '5432')
-        user = os.getenv('LOCAL_POSTGRES_USER', 'postgres')
-        password = os.getenv('LOCAL_POSTGRES_PASSWORD', 'postgres')
+        user = os.getenv('LOCAL_POSTGRES_USER')
+        password = os.getenv('LOCAL_POSTGRES_PASSWORD')
+
+        if not user or not password:
+            raise ValueError("Database credentials not found. Please set LOCAL_POSTGRES_USER and LOCAL_POSTGRES_PASSWORD in .env file.")
         
         if db_type == 'source':
             database = os.getenv('LOCAL_DB_SOURCE', 'ecommerce_source')
